@@ -33,7 +33,7 @@ bash /tmp/skill-shell/install.sh .        # instala em .claude/ do projeto atual
 
 ## O que tem dentro
 
-- **SKILL.md** — o contrato: 10 pisos inegociáveis + o mapa de references.
+- **SKILL.md** — o contrato: 11 pisos inegociáveis + o mapa de references.
 - **references/** — `piso` (strict mode e suas fugas, exit code, `trap`, `mktemp`, `eval`,
   idempotência), `qualidade` (aspas, `shellcheck`, bash vs POSIX, estrutura), `instalador` (o
   contrato do instalador), `stack-versoes` (anexo volátil com data de verificação).

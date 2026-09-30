@@ -21,6 +21,9 @@ Script de shell **é código de produção**: roda como root, apaga diretório e
 9. **Instalador se adapta e nunca culpa o usuário:** descobre o usuário real sob `sudo`, o
    gerenciador de pacotes e o shell; falha dizendo **o que fazer agora**.
 10. **Segredo nunca em argumento** (aparece em `ps`) nem em log.
+11. **Orquestrador não desenvolve; subagent barato executa.** O agent principal só planeja, despacha e
+    revisa; ação onerosa vira micro-tasks para subagents em `sonnet` (falhou → o mesmo subagent corrige →
+    re-decompõe → só então `opus`, com motivo). Detalhe: `schematize-engineering` → `references/orquestracao.md` §9.
 
 Gate: `bash .claude/skills/schematize-shell/scripts/check-shell.sh .` — waiver rastreável
 `# shell-ok: <motivo>`.
