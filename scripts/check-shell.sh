@@ -20,6 +20,16 @@ while IFS= read -r -d '' f; do arquivos+=("$f"); done < <(
     -not -path '*/target/*' -print0 2>/dev/null
 )
 
+# Arquivo ignorado pelo git do PRÓPRIO repo dele (lançador gerado, artefato local) não é código do repo:
+# fora da lista. `git -C <dir>` resolve o repo mais interno, então catálogo com repos aninhados funciona.
+if command -v git >/dev/null 2>&1; then
+  rastreados=()
+  for f in "${arquivos[@]}"; do
+    git -C "$(dirname "$f")" check-ignore -q -- "$(basename "$f")" 2>/dev/null || rastreados+=("$f")
+  done
+  arquivos=("${rastreados[@]+"${rastreados[@]}"}")
+fi
+
 # Fail-closed: repo sem script nenhum NÃO passa — sai 2. "Não achei" nunca é "está tudo certo".
 if [ "${#arquivos[@]}" -eq 0 ]; then
   echo "✖ nenhum .sh em $raiz — nada para verificar (e ausência de material não é aprovação)." >&2

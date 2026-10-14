@@ -143,4 +143,17 @@ saida="$(bash "$G" "$d" 2>&1)"; rc=$?
 if [ "$rc" = 2 ] && grep -q "não é aprovação" <<<"$saida"; then echo "  ✔ repo sem .sh sai 2 (não 0)"; ok=$((ok+1))
 else echo "  ✖ repo sem .sh: exit $rc"; fail=$((fail+1)); fi
 
+echo "== ignorado pelo git não entra; rastreado entra =="
+if command -v git >/dev/null 2>&1; then
+  d="$TMP/repo-ign"; mkdir -p "$d"; git -C "$d" init -q
+  printf 'gerado-*.sh\n' > "$d/.gitignore"
+  printf '#!/usr/bin/env bash\necho sem strict\n' > "$d/gerado-1.sh"
+  printf '#!/usr/bin/env bash\nset -euo pipefail\necho ok\n' > "$d/bom.sh"
+  saida="$(bash "$G" "$d" 2>&1)"; rc=$?
+  if [ "$rc" = 0 ]; then echo "  ✔ ignorado fora da lista"; ok=$((ok+1)); else echo "  ✖ ignorado entrou: exit $rc"; sed 's/^/      /' <<<"$saida"; fail=$((fail+1)); fi
+  printf '#!/usr/bin/env bash\necho sem strict\n' > "$d/rastreado.sh"
+  saida="$(bash "$G" "$d" 2>&1)"; rc=$?
+  if [ "$rc" = 1 ] && grep -qF "SEM exceção declarada" <<<"$saida"; then echo "  ✔ não ignorado continua reprovando"; ok=$((ok+1)); else echo "  ✖ rastreado: exit $rc"; fail=$((fail+1)); fi
+else echo "  · git ausente: caso pulado"; fi
+
 echo; echo "check-shell: $ok ok, $fail falha(s)"; [ "$fail" = 0 ]
