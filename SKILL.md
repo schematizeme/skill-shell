@@ -2,7 +2,8 @@
 name: schematize-shell
 metadata:
   version: 0.2.2
-description: O piso de SHELL da casa — script de shell é código de produção, não cola. Rege strict mode (`set -euo pipefail`) e, principalmente, o que ele NÃO cobre (`-e` não dispara em condição, `local x=$(cmd)` mascara status, job em background falha calado); quoting e word splitting; `shellcheck` como gate que trava o merge; VETADO `eval`; exit code como contrato (0 passa · 1 reprova · 2 nada verificável); `trap` de limpeza em EXIT/INT/TERM; `mktemp` (nome fixo em /tmp é symlink attack); idempotência; portabilidade bash vs POSIX sh (dash, busybox, bash 3.2 do macOS); e o contrato do instalador que SE ADAPTA e nunca culpa quem rodou. Traz o gate executável (`scripts/check-shell.sh`) com waiver rastreável. Use SEMPRE que for escrever, revisar ou auditar `.sh` — instalador, gate de CI, script de ops, hook, harness de teste.
+description: >-
+  Piso de shell da casa: script é código de produção. Use ao criar ou revisar *.sh, instaladores e hooks: strict mode e seus limites, aspas, trap, temporários seguros, idempotência, shellcheck e shfmt como gate, bats nos testes, portabilidade bash/dash/ash. Não use para serviço. Traz template de CI e .shellcheckrc.
 ---
 <!-- cross-skill: efeitos-externos.md, ops.md -> schematize-engineering -->
 
@@ -13,6 +14,30 @@ produção**. Ele roda como root no servidor, apaga diretório, decide deploy e 
 o usuário executa — e é o único lugar onde a casa aceitava, até 2026-08-21, código sem piso nenhum.
 
 **Versão:** skill `schematize-shell` v0.2.2. Changelog em `CHANGELOG.md`.
+
+## Precedência e herança (leia antes de divergir)
+
+Esta skill é o recorte **shell** das linguagens **sancionadas fora do rol de backend** (`schematize-engineering` → `references/linguagens.md` §2.2): **ferramenta** — script de ops, instalador, hook; script é código de produção.
+
+1. **Onde esta skill divergir da base, a BASE MANDA.** Aqui mora a especialização — a lib, o gate, a
+   sintaxe da linguagem. Divergência de *piso* é defeito desta skill, não variante local.
+2. **O que não está repetido aqui é HERDADO, não dispensado.** Valem integralmente, sem cópia local:
+   - **§28 Archive** — `<projeto>/<projeto>_archive/` é **repositório git próprio, PRIVADO e
+     obrigatório**, criticidade 0 (`schematize-archive`).
+   - **§35 Definition of Done** e a lista de anti-padrões (citada por **título**, nunca por número).
+   - **§39 Índice/MAPA** — enumeração exaustiva (uma entrada por unidade chamável, `M == N`) e grafo
+     com arestas em ASCII (`A -> B`), nunca a seta unicode.
+   - **IAM** (`schematize-engineering` → `references/iam.md`): identidade ≠ email, ≥2 fatores, ReBAC
+     multi-tenant, argon2id-only para senha nova, sessão longa e logout irreversível.
+   - **Efeito externo** nunca sai de não-produção (`schematize-engineering` →
+     `references/efeitos-externos.md`).
+   - **Orquestração** (`schematize-engineering` → `references/orquestracao.md` §9): o principal não
+     desenvolve; subagents `sonnet` por padrão, `opus` só após falha.
+3. **QA, ops, IAM e índice não têm comando próprio aqui:** vêm da base `/eng-*`. Para trabalho
+   contínuo use `/eng-overdev`; para planejar `/eng-plan`; para varrer a base `/eng-scan`; para
+   revisão geral `/eng-review` (e `/eng-ops`, `/eng-iam`, `/eng-index`). Os comandos
+   `/shell-*` cobrem só o piso da linguagem.
+
 
 ## Por que ela nasceu
 
@@ -51,6 +76,8 @@ Mapa de references:
 | Aspas e word splitting, `shellcheck` como gate (e como silenciar de forma rastreável), bash vs POSIX/dash/busybox/macOS, estrutura do script | `references/qualidade.md` |
 | O contrato do instalador: detectar em vez de exigir, falhar bem, `curl \| bash`, checklist | `references/instalador.md` |
 | Versões e ferramental (bash, dash, busybox, `shellcheck`, `shfmt`, `bats`) | `references/stack-versoes.md` |
+
+Assets prontos para copiar: `assets/ci/github-actions-ci.yml` (shellcheck, shfmt -d, bats/`.test.sh`) · `assets/lint/.shellcheckrc`.
 
 ## Pisos inegociáveis (vetam o atalho)
 

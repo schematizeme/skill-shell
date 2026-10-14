@@ -3,6 +3,21 @@
 Todas as mudanças relevantes deste pacote, no formato [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/),
 com versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
+## [0.3.0] — 2026-10-14
+Saneamento: description válida e ancorada nos artefatos, herança explícita da base e CI de referência — porque a skill não dizia o que herdava (nem qual era o papel dela no §2.2 de `linguagens.md`) e o instalador prometia hooks que não existem.
+
+### Corrigido
+- `description` em bloco `>-`, ≤350 caracteres, YAML válido, ancorada nos artefatos da linguagem.
+- Seção "Precedência e herança": §28 archive, §35 DoD, §39 índice, IAM, efeito externo, orquestração herdados da base; papel ancorado em `schematize-engineering → references/linguagens.md` §2.2; QA/ops/IAM/índice vêm de `/eng-*` (`/eng-overdev`, `/eng-plan`, `/eng-scan`, `/eng-review`).
+- `install.sh`: removido o trecho que copiava `assets/hooks` e mandava registrar `assets/settings.claude.example.json` — nenhum dos dois existe (mensagem enganosa).
+- `shell-help`: `/shell-load` listava "(piso, plataforma)"; corrigido para os arquivos reais.
+
+### Adicionado
+- `assets/ci/github-actions-ci.yml` (actions pinadas por SHA) e arquivo de config do linter em `assets/lint/`; referenciados no SKILL.md.
+
+### Atualizado
+- Anexo volátil: bash 5.3 existe, 5.2 é a linha comum (Debian 13).
+
 ## [0.2.2] — 2026-09-30
 O piso de orquestração passa a ser **herdado** da base em vez de copiado à mão: uma mudança na engineering não exige mais editar 38 arquivos.
 
