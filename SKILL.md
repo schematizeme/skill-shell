@@ -1,7 +1,7 @@
 ---
 name: schematize-shell
 metadata:
-  version: 0.3.0
+  version: 0.3.1
 description: >-
   Piso de shell: script é código de produção. Use ao criar ou revisar *.sh, instaladores e hooks: strict mode e
   limites, aspas, trap, temporários seguros, idempotência, shellcheck/shfmt, bats. Traz CI e .shellcheckrc.
@@ -14,7 +14,7 @@ Disciplina normativa para **shell script**. A tese é curta: **script de shell �
 produção**. Ele roda como root no servidor, apaga diretório, decide deploy e é a primeira coisa que
 o usuário executa — e é o único lugar onde a casa aceitava, até 2026-08-21, código sem piso nenhum.
 
-**Versão:** skill `schematize-shell` v0.3.0. Changelog em `CHANGELOG.md`.
+**Versão:** skill `schematize-shell` v0.3.1. Changelog em `CHANGELOG.md`.
 
 ## Precedência e herança (leia antes de divergir)
 
