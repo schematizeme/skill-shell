@@ -3,7 +3,7 @@ name = "schematize-shell"
 tag = "Linguagem · Shell"
 status = "beta"
 order = 26
-current_version = "0.2.2"
+current_version = "0.3.0"
 href = "/shell"
 
 [descriptions]

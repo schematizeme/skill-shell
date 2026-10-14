@@ -1,0 +1,21 @@
+# CI de shell (schematize-shell). Copie para .github/workflows/ci.yml.
+# Config do shellcheck: assets/lint/.shellcheckrc (copie para a raiz do repo).
+name: ci
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  shell:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Ferramentas
+        run: sudo apt-get update && sudo apt-get install -y shellcheck shfmt bats
+      - name: shellcheck (piso = warning)
+        run: git ls-files '*.sh' | xargs -r shellcheck --severity=warning
+      - name: shfmt (diff)
+        run: git ls-files '*.sh' | xargs -r shfmt -d -i 2 -ci -bn
+      - name: Testes (bats, se houver)
+        run: if [ -d test ] || [ -d tests ]; then bats -r test tests 2>/dev/null || bats -r tests; fi
+      - name: Testes .test.sh
+        run: for t in $(git ls-files '*.test.sh'); do bash "$t"; done
