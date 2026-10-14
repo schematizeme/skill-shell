@@ -3,8 +3,7 @@ name: schematize-shell
 metadata:
   version: 0.3.1
 description: >-
-  Piso de shell: script é código de produção. Use ao criar ou revisar *.sh, instaladores e hooks: strict mode e
-  limites, aspas, trap, temporários seguros, idempotência, shellcheck/shfmt, bats. Traz CI e .shellcheckrc.
+  Piso de shell: script é código de produção. Use ao criar ou revisar *.sh, instaladores e hooks: strict mode, aspas, trap, temporários seguros, shellcheck, bats.
 ---
 <!-- cross-skill: efeitos-externos.md, ops.md -> schematize-engineering -->
 
