@@ -19,7 +19,7 @@ o usuário executa — e é o único lugar onde a casa aceitava, até 2026-08-21
 
 ## Precedência e herança (leia antes de divergir)
 
-Esta skill é o recorte **shell** das linguagens **sancionadas fora do rol de backend** (`schematize-engineering` → `references/linguagens.md` §2.2): **ferramenta** — script de ops, instalador, hook; script é código de produção.
+<!-- herdado:engineering/precedencia:foraRol intro="Esta skill é o recorte **shell** das linguagens **sancionadas fora do rol de backend** (`schematize-engineering` → `references/linguagens.md` §2.2): **ferramenta** — script de ops, instalador, hook; script é código de produção." cmd="shell" -->Esta skill é o recorte **shell** das linguagens **sancionadas fora do rol de backend** (`schematize-engineering` → `references/linguagens.md` §2.2): **ferramenta** — script de ops, instalador, hook; script é código de produção.
 
 1. **Onde esta skill divergir da base, a BASE MANDA.** Aqui mora a especialização — a lib, o gate, a
    sintaxe da linguagem. Divergência de *piso* é defeito desta skill, não variante local.
@@ -38,8 +38,7 @@ Esta skill é o recorte **shell** das linguagens **sancionadas fora do rol de ba
 3. **QA, ops, IAM e índice não têm comando próprio aqui:** vêm da base `/eng-*`. Para trabalho
    contínuo use `/eng-overdev`; para planejar `/eng-plan`; para varrer a base `/eng-scan`; para
    revisão geral `/eng-review` (e `/eng-ops`, `/eng-iam`, `/eng-index`). Os comandos
-   `/shell-*` cobrem só o piso da linguagem.
-
+   `/shell-*` cobrem só o piso da linguagem.<!-- /herdado -->
 
 ## Por que ela nasceu
 
